@@ -33,8 +33,8 @@ echo -e "\n===== Begining Nmap Port Scan =====\n"
 sudo nmap -sT -p- -Pn -T4 $ip --open -o nmapTCPScan.txt
 
 #formating TCP port numbers so we can perform service scans
-cat nmapPortScan.txt | grep "/tcp\|/udp" | cut -d "/" -f 1 > tcpPorts.txt
-awk '{print $1}' ports.txt | paste -s -d, - > tcpPortList.txt
+cat nmapTCPScan.txt | grep "/tcp\|/udp" | cut -d "/" -f 1 > tcpPorts.txt
+awk '{print $1}' tcpPorts.txt | paste -s -d, - > tcpPortList.txt
 
 #scan for services on the open ports
 echo -e "\n===== Begining Nmap Service Scan =====\n"
