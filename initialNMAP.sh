@@ -30,7 +30,7 @@ pwd
 echo -e "\n===== Begining Nmap Port Scan =====\n"
 
 #nmap scan to identify all open port
-sudo nmap -sUT -p- -Pn --min-rate 10000 --script vulners.nse $ip --open -o nmapPortScan.txt
+sudo nmap -sUT -p- -Pn -T4 $ip --open -o nmapPortScan.txt
 
 #formating port numbers so we can perform service scans
 cat nmapPortScan.txt | grep "/tcp\|/udp" | cut -d "/" -f 1 > ports.txt
