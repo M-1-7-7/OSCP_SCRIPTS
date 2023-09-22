@@ -10,11 +10,11 @@ cat ../nmapScans/sVC_Port_Scan.txt | grep "/tcp\|/udp" | grep "https\|ssl/http" 
 
 touch url.txt
 
-cat httpPorts.txt | while read line;
+uniq httpPorts.txt | while read line;
 do
 	echo "http://$ip:$line/" >> url.txt
 done;
-cat httpsPorts.txt | while read line;
+uniq httpsPorts.txt | while read line;
 do
 	echo "https://$ip:$line/" >> url.txt
 done;
