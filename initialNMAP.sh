@@ -48,6 +48,6 @@ cat sVC_Port_Scan.txt | grep "PORT\|open" > ports_for_report.txt
 #start web enum if HTTP ports are open
 echo -e "\n===== Begining Web Service Scan =====\n"
 
-./HTTP,HTTPS_web_enum.sh
+./../../HTTP,HTTPS_web_enum.sh
 
 
