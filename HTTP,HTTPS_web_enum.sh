@@ -1,24 +1,3 @@
-# Find all http and https ports
-ip=$1
-
-mkdir $ip/webEnum && cd $ip/webEnum
-
-
-#Web Feroxbuster
-cat ../nmapScans/sVC_Port_Scan.txt | grep "/tcp\|/udp" | grep "http" | grep -v "ssl/http" | cut -d "/" -f 1 > httpPorts.txt
-cat ../nmapScans/sVC_Port_Scan.txt | grep "/tcp\|/udp" | grep "https\|ssl/http" | cut -d "/" -f 1 > httpsPorts.txt
-
-touch url.txt
-
-uniq httpPorts.txt | while read line;
-do
-	echo "http://$ip:$line/" >> url.txt
-done;
-uniq httpsPorts.txt | while read line;
-do
-	echo "https://$ip:$line/" >> url.txt
-done;
-
 domain=$1
 mkdir $domain && cd $domain
 touch url.txt
@@ -31,6 +10,7 @@ run_whois(){
  		echo $line
   		whois $line >> whois_output.txt
     	done;
+    	cat whois_output.txt
 }
 
 run_curl(){
@@ -41,6 +21,7 @@ run_curl(){
   		echo $line
   		curl -I $line >> curl_output.txt
     	done;
+    	cat curl_output.txt
 }
 run_hakrawler(){
 	echo "--- Executing HAKRAWLER on valid urls ---"
@@ -50,6 +31,7 @@ run_hakrawler(){
   		echo $line
   		echo $line | hakrawler -u >> hakrawler_output.txt
     	done;
+    	cat hakrawler_output.txt
 }
 
 run_ferox(){
