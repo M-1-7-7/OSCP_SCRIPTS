@@ -30,15 +30,15 @@ pwd
 echo -e "\n===== Begining Nmap Port Scan =====\n"
 
 #nmap scan to identify all open port
-sudo nmap -sUT -p- -Pn --min-rate 10000 -T4 $ip --open -o nmapTCPScan.txt
+sudo nmap -sUT -p- -Pn --min-rate 10000 -T4 $ip --open -o nmapScan.txt
 
 #formating TCP port numbers so we can perform service scans
-cat nmapTCPScan.txt | grep "/tcp\|/udp" | cut -d "/" -f 1 > tcpPorts.txt
-awk '{print $1}' tcpPorts.txt | paste -s -d, - > tcpPortList.txt
+cat nmapScan.txt | grep "/tcp\|/udp" | cut -d "/" -f 1 > Ports.txt
+awk '{print $1}' Ports.txt | paste -s -d, - > PortList.txt
 
 #scan for services on the open ports
 echo -e "\n===== Begining Nmap Service Scan =====\n"
-sudo nmap -sUT --min-rate 10000 -p $(cat tcpPortList.txt) -sVC -Pn $ip --open -o sVC_Port_Scan.txt
+sudo nmap -sUT --min-rate 10000 -p $(cat PortList.txt) -sVC -Pn $ip --open -o sVC_Port_Scan.txt
 
 # scan for UDP ports/services
 
@@ -47,7 +47,6 @@ cat sVC_Port_Scan.txt | grep "PORT\|open" > ports_for_report.txt
 
 #start web enum if HTTP ports are open
 echo -e "\n===== Begining Web Service Scan =====\n"
-
-./../../HTTP,HTTPS_web_enum.sh
+$scriptDir/HTTP,HTTPS_web_enum.sh
 
 
